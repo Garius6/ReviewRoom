@@ -4,10 +4,14 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/list_fragment_nav">
 
-    <fragment android:id="@+id/list_fragment_nav" >
+    <fragment
+        android:id="@+id/list_fragment_nav"
+        android:name="com.toohome.android.reviewroom.ui.MovieListFragment">
         <action
             android:id="@+id/action_list_fragment_nav_to_detail_fragment_nav"
             app:destination="@id/detail_fragment_nav" />
     </fragment>
-    <fragment android:id="@+id/detail_fragment_nav" />
+    <fragment
+        android:id="@+id/detail_fragment_nav"
+        android:name="com.toohome.android.reviewroom.ui.MovieDetailFragment" />
 </navigation>
