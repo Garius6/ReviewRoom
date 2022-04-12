@@ -37,5 +37,12 @@
             app:layout_constraintTop_toBottomOf="@+id/poster_view"
             tools:text="Movie name" />
 
+        <include
+            android:id="@+id/pending_spinner"
+            layout="@layout/pending_template" />
+
+        <include
+            android:id="@+id/error_template"
+            layout="@layout/error_template" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

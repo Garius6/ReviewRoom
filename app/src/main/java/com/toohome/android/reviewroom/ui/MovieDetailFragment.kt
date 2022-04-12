@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.toohome.android.reviewroom.R
@@ -23,14 +24,32 @@ class MovieDetailFragment : Fragment(R.layout.fragment_detail_movie) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailMovieBinding.inflate(inflater, container, false)
+
+        hideAll()
+        binding.pendingSpinner.isGone = false
+
         model.movie.observe(this.viewLifecycleOwner) {
+            hideAll()
             when (it) {
-                is SuccessResult -> binding.movie = it.data
-                is ErrorResult -> throw Exception(it.error.message)
+                is SuccessResult -> {
+                    binding.movieName.isGone = false
+                    binding.posterView.isGone = false
+                    binding.movie = it.data
+                }
+                is ErrorResult -> {
+                    binding.errorTemplate.isGone = false
+                }
             }
         }
 
         model.selectedMovieId.value = 0L
         return binding.root
+    }
+
+    private fun hideAll() {
+        binding.movieName.isGone = true
+        binding.posterView.isGone = true
+        binding.pendingSpinner.isGone = true
+        binding.errorTemplate.isGone = true
     }
 }

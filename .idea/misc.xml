@@ -7,9 +7,11 @@
         <entry key="app/src/main/res/drawable/ic_poster_placeholder.xml" value="0.175" />
         <entry key="app/src/main/res/layout-v23/fragment_movie_detail.xml" value="0.14628623188405798" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14628623188405798" />
+        <entry key="app/src/main/res/layout/error_template.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_detail_movie.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_list_movie.xml" value="0.14628623188405798" />
         <entry key="app/src/main/res/layout/fragment_movie_detail.xml" value="0.4467496542185339" />
+        <entry key="app/src/main/res/layout/pending_template.xml" value="0.196875" />
       </map>
     </option>
   </component>
