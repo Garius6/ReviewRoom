@@ -9,6 +9,7 @@ class MovieViewModelFactory : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         when (modelClass) {
             MovieDetailViewModel::class.java -> return MovieDetailViewModel(MovieRepository.get()) as T
+            MovieListViewModel::class.java -> return MovieListViewModel(MovieRepository.get()) as T
         }
         throw IllegalStateException()
     }
