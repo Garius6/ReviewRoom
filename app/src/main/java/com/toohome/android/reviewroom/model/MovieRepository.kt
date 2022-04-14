@@ -7,7 +7,7 @@ import com.toohome.android.reviewroom.utils.SuccessResult
 import okhttp3.HttpUrl
 import retrofit2.Response
 
-class MovieRepository(baseUrl: HttpUrl) {
+class MovieRepository(val baseUrl: HttpUrl) {
     private val movieApiFetcher: MovieApiFetcher = MovieApiFetcher(baseUrl)
 
     private suspend fun <T> invokeCall(call: suspend () -> Response<T>): Result<T, Exception> {
