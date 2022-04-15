@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.toohome.android.reviewroom.R
@@ -13,6 +14,7 @@ import com.toohome.android.reviewroom.databinding.ListItemMovieBinding
 import com.toohome.android.reviewroom.databinding.ListMovieBinding
 import com.toohome.android.reviewroom.model.Movie
 import com.toohome.android.reviewroom.utils.ErrorResult
+import com.toohome.android.reviewroom.utils.PendingResult
 import com.toohome.android.reviewroom.utils.SuccessResult
 
 class MovieListFragment : Fragment() {
@@ -23,11 +25,11 @@ class MovieListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = ListMovieBinding.inflate(inflater, container, false)
         binding.rcMovieList.adapter = adapter
         binding.rcMovieList.layoutManager = GridLayoutManager(this.context, 3)
-        model.movies.observe(viewLifecycleOwner, {
+        model.movies.observe(viewLifecycleOwner) {
             when (it) {
                 is SuccessResult -> {
                     binding.rcMovieList.adapter = MovieAdapter(it.data)
@@ -35,22 +37,28 @@ class MovieListFragment : Fragment() {
                 is ErrorResult -> {
                     throw Exception("server unavailable")
                 }
+                is PendingResult -> {
+                    throw NotImplementedError("Pending result never sending ")
+                }
             }
-        })
+        }
         return binding.root
     }
 
     inner class MovieAdapter(private val movieList: List<Movie>) :
         RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
 
-
         inner class MovieHolder(item: View) : RecyclerView.ViewHolder(item) {
-            val binding = ListItemMovieBinding.bind(item)
+            private val binding = ListItemMovieBinding.bind(item)
+
             fun bind(movie: Movie) = with(binding) {
                 model.downloadInto(movie.posterUrl, im)
-
                 tvTitle.text = movie.name
-
+                itemView.setOnClickListener {
+                    val action =
+                        MovieListFragmentDirections.actionListFragmentNavToDetailFragmentNav(movie.id)
+                    it.findNavController().navigate(action)
+                }
             }
         }
 
@@ -67,9 +75,5 @@ class MovieListFragment : Fragment() {
         override fun getItemCount(): Int {
             return movieList.size
         }
-
-
     }
-
-
 }

@@ -13,5 +13,9 @@
     </fragment>
     <fragment
         android:id="@+id/detail_fragment_nav"
-        android:name="com.toohome.android.reviewroom.ui.MovieDetailFragment" />
+        android:name="com.toohome.android.reviewroom.ui.MovieDetailFragment">
+        <argument
+            android:name="movieId"
+            app:argType="long" />
+    </fragment>
 </navigation>
