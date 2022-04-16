@@ -4,10 +4,16 @@ import com.toohome.android.reviewroom.model.api.MovieApiFetcher
 import com.toohome.android.reviewroom.utils.ErrorResult
 import com.toohome.android.reviewroom.utils.Result
 import com.toohome.android.reviewroom.utils.SuccessResult
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl
 import retrofit2.Response
 
-class MovieRepository(val baseUrl: HttpUrl) {
+class MovieRepository(
+    val baseUrl: HttpUrl,
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+) {
     private val movieApiFetcher: MovieApiFetcher = MovieApiFetcher(baseUrl)
 
     private suspend fun <T> invokeCall(call: suspend () -> Response<T>): Result<T, Exception> {
@@ -21,24 +27,26 @@ class MovieRepository(val baseUrl: HttpUrl) {
     }
 
     suspend fun getMovies(): Result<List<Movie>, Exception> {
-        return invokeCall { movieApiFetcher.getMovies() }
+        return withContext(defaultDispatcher) { invokeCall { movieApiFetcher.getMovies() } }
     }
 
     suspend fun getMovie(id: Long): Result<Movie, Exception> {
-        return invokeCall { movieApiFetcher.getMovie(id) }
+        return withContext(defaultDispatcher) { invokeCall { movieApiFetcher.getMovie(id) } }
     }
 
     suspend fun newCommentForMovie(movieId: Long, comment: Comment): Result<Boolean, Exception> {
-        return try {
-            movieApiFetcher.createCommentForMovie(movieId, comment)
-            SuccessResult(true)
-        } catch (e: Exception) {
-            ErrorResult(e)
+        return withContext(defaultDispatcher) {
+            try {
+                movieApiFetcher.createCommentForMovie(movieId, comment)
+                SuccessResult(true)
+            } catch (e: Exception) {
+                ErrorResult(e)
+            }
         }
     }
 
     suspend fun getComments(movieId: Long): Result<List<Comment>, Exception> {
-        return invokeCall { movieApiFetcher.getComments(movieId) }
+        return withContext(defaultDispatcher) { invokeCall { movieApiFetcher.getComments(movieId) } }
     }
 
     companion object {

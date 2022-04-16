@@ -19,7 +19,7 @@ private const val TAG = "MovieDetailFragment"
 class MovieDetailFragment : Fragment(R.layout.fragment_detail_movie) {
     private val model: MovieDetailViewModel by viewModels(factoryProducer = { MovieViewModelFactory() })
     private lateinit var binding: FragmentDetailMovieBinding
-    val args: MovieDetailFragmentArgs by navArgs()
+    private val args: MovieDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,10 +27,7 @@ class MovieDetailFragment : Fragment(R.layout.fragment_detail_movie) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailMovieBinding.inflate(inflater, container, false)
-        model.selectedMovieId.value = args.movieId
-
-        hideAll()
-        binding.pendingSpinner.isGone = false
+        model.getMovie(args.movieId)
 
         model.movie.observe(this.viewLifecycleOwner) {
             hideAll()
@@ -45,7 +42,7 @@ class MovieDetailFragment : Fragment(R.layout.fragment_detail_movie) {
                     binding.errorTemplate.isGone = false
                 }
                 is PendingResult -> {
-                    throw NotImplementedError("Pending result never sending ")
+                    binding.pendingSpinner.isGone = false
                 }
             }
         }
