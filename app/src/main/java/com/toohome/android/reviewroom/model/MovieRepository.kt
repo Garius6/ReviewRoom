@@ -28,6 +28,19 @@ class MovieRepository(val baseUrl: HttpUrl) {
         return invokeCall { movieApiFetcher.getMovie(id) }
     }
 
+    suspend fun newCommentForMovie(movieId: Long, comment: Comment): Result<Boolean, Exception> {
+        return try {
+            movieApiFetcher.createCommentForMovie(movieId, comment)
+            SuccessResult(true)
+        } catch (e: Exception) {
+            ErrorResult(e)
+        }
+    }
+
+    suspend fun getComments(movieId: Long): Result<List<Comment>, Exception> {
+        return invokeCall { movieApiFetcher.getComments(movieId) }
+    }
+
     companion object {
         private var INSTANCE: MovieRepository? = null
 
