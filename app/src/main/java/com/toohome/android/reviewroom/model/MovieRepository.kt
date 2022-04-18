@@ -1,5 +1,6 @@
 package com.toohome.android.reviewroom.model
 
+import android.widget.ImageView
 import com.toohome.android.reviewroom.model.api.MovieApiFetcher
 import com.toohome.android.reviewroom.utils.ErrorResult
 import com.toohome.android.reviewroom.utils.Result
@@ -7,15 +8,12 @@ import com.toohome.android.reviewroom.utils.SuccessResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.HttpUrl
 import retrofit2.Response
 
 class MovieRepository(
-    val baseUrl: HttpUrl,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val movieApiFetcher: MovieApiFetcher,
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
-    private val movieApiFetcher: MovieApiFetcher = MovieApiFetcher(baseUrl)
-
     private suspend fun <T> invokeCall(call: suspend () -> Response<T>): Result<T, Exception> {
         return try {
             val res = call.invoke().body()
@@ -49,12 +47,17 @@ class MovieRepository(
         return withContext(defaultDispatcher) { invokeCall { movieApiFetcher.getComments(movieId) } }
     }
 
+    fun loadPostIntoImageView(movie: Movie, into: ImageView) {
+        val url = movie.posterUrl
+        movieApiFetcher.loadPosterIntoViewWithPlaceholder(url, into = into)
+    }
+
     companion object {
         private var INSTANCE: MovieRepository? = null
 
-        fun initialize(baseUrl: HttpUrl) {
+        fun initialize(movieApiFetcher: MovieApiFetcher) {
             if (INSTANCE == null) {
-                INSTANCE = MovieRepository(baseUrl)
+                INSTANCE = MovieRepository(movieApiFetcher = movieApiFetcher)
             }
         }
 

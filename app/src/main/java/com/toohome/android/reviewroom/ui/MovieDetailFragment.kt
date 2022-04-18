@@ -36,7 +36,7 @@ class MovieDetailFragment : Fragment(R.layout.fragment_detail_movie) {
                     binding.movieName.isGone = false
                     binding.posterView.isGone = false
                     binding.movie = it.data
-                    model.downloadInto(it.data.posterUrl, binding.posterView)
+                    model.loadPosterInto(it.data, binding.posterView)
                 }
                 is ErrorResult -> {
                     binding.errorTemplate.isGone = false

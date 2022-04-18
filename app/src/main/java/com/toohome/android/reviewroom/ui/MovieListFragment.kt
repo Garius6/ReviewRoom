@@ -52,7 +52,7 @@ class MovieListFragment : Fragment() {
             private val binding = ListItemMovieBinding.bind(item)
 
             fun bind(movie: Movie) = with(binding) {
-                model.downloadInto(movie.posterUrl, im)
+                model.loadPosterInto(movie, im)
                 tvTitle.text = movie.name
                 itemView.setOnClickListener {
                     val action =
