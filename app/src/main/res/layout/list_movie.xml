@@ -7,6 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/error_template"
+            layout="@layout/error_template" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_movie_list"
             android:layout_width="0dp"
@@ -16,7 +20,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </layout>
 

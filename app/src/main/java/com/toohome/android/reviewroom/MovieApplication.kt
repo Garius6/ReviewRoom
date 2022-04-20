@@ -10,9 +10,9 @@ class MovieApplication : Application() {
         super.onCreate()
 
         val baseUrl = HttpUrl.Builder()
-            .scheme("")
-            .host("")
-            .port()
+            .scheme("http")
+            .host("10.0.2.2")
+            .port(8000)
             .build()
 
         val movieApiFetcher = MovieApiFetcher(baseUrl)

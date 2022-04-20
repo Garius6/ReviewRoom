@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -29,13 +30,17 @@ class MovieListFragment : Fragment() {
         binding = ListMovieBinding.inflate(inflater, container, false)
         binding.rcMovieList.adapter = adapter
         binding.rcMovieList.layoutManager = GridLayoutManager(this.context, 3)
+
+        hideAll()
         model.movies.observe(viewLifecycleOwner) {
+            hideAll()
             when (it) {
                 is SuccessResult -> {
+                    binding.rcMovieList.isVisible = true
                     binding.rcMovieList.adapter = MovieAdapter(it.data)
                 }
                 is ErrorResult -> {
-                    throw Exception("server unavailable")
+                    binding.errorTemplate.isVisible = true
                 }
                 is PendingResult -> {
                     throw NotImplementedError("Pending result never sending ")
@@ -43,6 +48,11 @@ class MovieListFragment : Fragment() {
             }
         }
         return binding.root
+    }
+
+    private fun hideAll() {
+        binding.rcMovieList.isVisible = false
+        binding.errorTemplate.isVisible = false
     }
 
     inner class MovieAdapter(private val movieList: List<Movie>) :
