@@ -1,4 +1,4 @@
-package com.toohome.android.reviewroom.utils
+package com.toohome.android.reviewroom.data
 
 sealed class Result<out Success, out Failure>
 

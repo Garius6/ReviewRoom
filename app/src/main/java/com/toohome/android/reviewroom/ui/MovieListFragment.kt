@@ -11,12 +11,14 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.toohome.android.reviewroom.R
+import com.toohome.android.reviewroom.data.ErrorResult
+import com.toohome.android.reviewroom.data.PendingResult
+import com.toohome.android.reviewroom.data.SuccessResult
 import com.toohome.android.reviewroom.data.model.Movie
 import com.toohome.android.reviewroom.databinding.ListItemMovieBinding
 import com.toohome.android.reviewroom.databinding.ListMovieBinding
-import com.toohome.android.reviewroom.utils.ErrorResult
-import com.toohome.android.reviewroom.utils.PendingResult
-import com.toohome.android.reviewroom.utils.SuccessResult
+
+private const val TAG = "MovieListFragment"
 
 class MovieListFragment : Fragment() {
     private lateinit var binding: ListMovieBinding
@@ -27,6 +29,16 @@ class MovieListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+//        val baseUrl = HttpUrl.Builder()
+//            .scheme("http")
+//            .host("10.0.2.2").addPathSegments("/user/login")
+//            .port(8000)
+//            .build()
+//        val testLoginRepository: LoginRepository = LoginRepository(LoginDataSource(baseUrl))
+//        runBlocking(Dispatchers.IO) {
+//            Log.d(TAG, testLoginRepository.login("User1", "User1Password").toString())
+//        }
+
         binding = ListMovieBinding.inflate(inflater, container, false)
         binding.rcMovieList.adapter = adapter
         binding.rcMovieList.layoutManager = GridLayoutManager(this.context, 3)
