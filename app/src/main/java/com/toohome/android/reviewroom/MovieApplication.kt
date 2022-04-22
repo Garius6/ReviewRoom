@@ -1,7 +1,7 @@
 package com.toohome.android.reviewroom
 
 import android.app.Application
-import com.toohome.android.reviewroom.data.MovieApiFetcher
+import com.toohome.android.reviewroom.data.MovieRemoteDataSource
 import com.toohome.android.reviewroom.data.MovieRepository
 import okhttp3.HttpUrl
 
@@ -15,7 +15,7 @@ class MovieApplication : Application() {
             .port(8000)
             .build()
 
-        val movieApiFetcher = MovieApiFetcher(baseUrl)
+        val movieApiFetcher = MovieRemoteDataSource(baseUrl)
         MovieRepository.initialize(
             movieApiFetcher
         )

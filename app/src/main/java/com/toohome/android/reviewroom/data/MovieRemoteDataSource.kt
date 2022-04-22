@@ -12,7 +12,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MovieApiFetcher(val baseUrl: HttpUrl) {
+class MovieRemoteDataSource(val baseUrl: HttpUrl) {
     private val movieApi: MovieApi = Retrofit.Builder()
         .client(OkHttpClient())
         .addConverterFactory(GsonConverterFactory.create())

@@ -15,7 +15,7 @@ import retrofit2.Response
 class MovieRepositoryTest {
 
     @MockK
-    lateinit var movieApiFetcher: MovieApiFetcher
+    lateinit var movieRemoteDataSource: MovieRemoteDataSource
 
     @MockK
     lateinit var iv: ImageView
@@ -27,49 +27,49 @@ class MovieRepositoryTest {
     fun getMovies(): Unit = runBlocking {
         val m = listOf(Movie(1, "Movie 1", ""), Movie(2, "Movie 2", ""))
 
-        coEvery { movieApiFetcher.getMovies() } returns Response.success(m)
+        coEvery { movieRemoteDataSource.getMovies() } returns Response.success(m)
 
-        val sut = MovieRepository(movieApiFetcher)
+        val sut = MovieRepository(movieRemoteDataSource)
         assertEquals(SuccessResult(m), sut.getMovies())
 
-        coVerify { movieApiFetcher.getMovies() }
+        coVerify { movieRemoteDataSource.getMovies() }
     }
 
     @Test
     fun getMovie(): Unit = runBlocking {
         val m = Movie(1, "Movie 1", "")
 
-        coEvery { movieApiFetcher.getMovie(1) } returns Response.success(m)
+        coEvery { movieRemoteDataSource.getMovie(1) } returns Response.success(m)
 
-        val sut = MovieRepository(movieApiFetcher)
+        val sut = MovieRepository(movieRemoteDataSource)
         assertEquals(SuccessResult(m), sut.getMovie(1))
 
-        coVerify { movieApiFetcher.getMovie(1) }
+        coVerify { movieRemoteDataSource.getMovie(1) }
     }
 
     @Test
     fun newCommentForMovie(): Unit = runBlocking {
         val c = Comment(1, "Movie 1 is good")
 
-        coEvery { movieApiFetcher.createCommentForMovie(1, c) } just Runs
+        coEvery { movieRemoteDataSource.createCommentForMovie(1, c) } just Runs
 
-        val sut = MovieRepository(movieApiFetcher)
+        val sut = MovieRepository(movieRemoteDataSource)
         sut.newCommentForMovie(1, c)
 
-        coVerify { movieApiFetcher.createCommentForMovie(1, c) }
+        coVerify { movieRemoteDataSource.createCommentForMovie(1, c) }
     }
 
     @Test
     fun getComments(): Unit = runBlocking {
         val c = listOf(Comment(0, "Movie 0 is good"))
 
-        coEvery { movieApiFetcher.getComments(1) } returns Response.success(c)
+        coEvery { movieRemoteDataSource.getComments(1) } returns Response.success(c)
 
-        val sut = MovieRepository(movieApiFetcher)
+        val sut = MovieRepository(movieRemoteDataSource)
 
         assertEquals(SuccessResult(c), sut.getComments(1))
 
-        coVerify { movieApiFetcher.getComments(1) }
+        coVerify { movieRemoteDataSource.getComments(1) }
     }
 
     @Test
@@ -77,15 +77,15 @@ class MovieRepositoryTest {
         val m = Movie(0, "", "Correct url")
 
         coEvery {
-            movieApiFetcher.loadPosterIntoViewWithPlaceholder(
+            movieRemoteDataSource.loadPosterIntoViewWithPlaceholder(
                 m.posterUrl,
                 into = iv
             )
         } just Runs
 
-        val sut = MovieRepository(movieApiFetcher)
+        val sut = MovieRepository(movieRemoteDataSource)
         sut.loadPostIntoImageView(m, iv)
 
-        coVerify { movieApiFetcher.loadPosterIntoViewWithPlaceholder(m.posterUrl, into = iv) }
+        coVerify { movieRemoteDataSource.loadPosterIntoViewWithPlaceholder(m.posterUrl, into = iv) }
     }
 }

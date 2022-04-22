@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class MovieRepository(
-    private val movieApiFetcher: MovieApiFetcher,
+    private val movieRemoteDataSource: MovieRemoteDataSource,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
     private suspend fun <T> invokeCall(call: suspend () -> Response<T>): Result<T, Exception> {
@@ -26,17 +26,17 @@ class MovieRepository(
     }
 
     suspend fun getMovies(): Result<List<Movie>, Exception> {
-        return withContext(defaultDispatcher) { invokeCall { movieApiFetcher.getMovies() } }
+        return withContext(defaultDispatcher) { invokeCall { movieRemoteDataSource.getMovies() } }
     }
 
     suspend fun getMovie(id: Long): Result<Movie, Exception> {
-        return withContext(defaultDispatcher) { invokeCall { movieApiFetcher.getMovie(id) } }
+        return withContext(defaultDispatcher) { invokeCall { movieRemoteDataSource.getMovie(id) } }
     }
 
     suspend fun newCommentForMovie(movieId: Long, comment: Comment): Result<Boolean, Exception> {
         return withContext(defaultDispatcher) {
             try {
-                movieApiFetcher.createCommentForMovie(movieId, comment)
+                movieRemoteDataSource.createCommentForMovie(movieId, comment)
                 SuccessResult(true)
             } catch (e: Exception) {
                 ErrorResult(e)
@@ -45,20 +45,26 @@ class MovieRepository(
     }
 
     suspend fun getComments(movieId: Long): Result<List<Comment>, Exception> {
-        return withContext(defaultDispatcher) { invokeCall { movieApiFetcher.getComments(movieId) } }
+        return withContext(defaultDispatcher) {
+            invokeCall {
+                movieRemoteDataSource.getComments(
+                    movieId
+                )
+            }
+        }
     }
 
     fun loadPostIntoImageView(movie: Movie, into: ImageView) {
         val url = movie.posterUrl
-        movieApiFetcher.loadPosterIntoViewWithPlaceholder(url, into = into)
+        movieRemoteDataSource.loadPosterIntoViewWithPlaceholder(url, into = into)
     }
 
     companion object {
         private var INSTANCE: MovieRepository? = null
 
-        fun initialize(movieApiFetcher: MovieApiFetcher) {
+        fun initialize(movieRemoteDataSource: MovieRemoteDataSource) {
             if (INSTANCE == null) {
-                INSTANCE = MovieRepository(movieApiFetcher = movieApiFetcher)
+                INSTANCE = MovieRepository(movieRemoteDataSource = movieRemoteDataSource)
             }
         }
 
