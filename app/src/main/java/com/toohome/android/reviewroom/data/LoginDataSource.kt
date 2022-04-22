@@ -21,26 +21,31 @@ class LoginDataSource(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
+    var token = ""
+
     suspend fun login(username: String, password: String): Result<LoggedUser, Exception> {
         return withContext(dispatcher) {
             try {
-
-                val url = baseUrl.newBuilder().addPathSegment("user/loginOrCreate")
+                val url = baseUrl.newBuilder()
+                    .addPathSegment("user/loginOrCreate")
                     .addQueryParameter("username", username)
                     .addQueryParameter("password", password).build()
+
                 val client = OkHttpClient()
                 val request = Request.Builder().url(url).get().build()
                 val response = client.newCall(request).execute()
                 val tokenString = response.body()?.string()
-                println(tokenString)
-                Log.d(TAG, tokenString ?: "tokenString is null")
-                val token =
+                    ?: throw IllegalStateException("token string cannot be null")
+                token = tokenString
+
+                Log.d(TAG, tokenString)
+                val jwt =
                     JWT(
-                        tokenString ?: throw IllegalArgumentException("token string cannot be null")
+                        tokenString
                     )
 
-                val fakeUser = token.getClaim("id").asLong()?.let {
-                    token.getClaim("username").asString()
+                val fakeUser = jwt.getClaim("id").asLong()?.let {
+                    jwt.getClaim("username").asString()
                         ?.let { it1 -> LoggedUser(it, it1) }
                 }
                 SuccessResult(fakeUser ?: throw IllegalStateException("Cannot parse token"))

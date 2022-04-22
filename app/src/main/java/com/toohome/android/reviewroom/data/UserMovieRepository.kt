@@ -26,21 +26,18 @@ class UserMovieRepository(
 
     private fun setLoggedInUser(loggedInUser: LoggedUser) {
         this.user = loggedInUser
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
     }
 
     suspend fun login(username: String, password: String): Result<LoggedUser, Exception> {
-        return withContext(defaultDispatcher) {
-            // handle login
-            val result = loginDataSource.login(username, password)
+        // handle login
+        val result = loginDataSource.login(username, password)
 
-            if (result is SuccessResult) {
-                setLoggedInUser(result.data)
-            }
-
-            result
+        if (result is SuccessResult) {
+            movieDataSource.setToken(loginDataSource.token)
+            setLoggedInUser(result.data)
         }
+
+        return result
     }
 
     private suspend fun <T> invokeCall(call: suspend () -> Response<T>): Result<T, Exception> {

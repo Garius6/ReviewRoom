@@ -4,10 +4,11 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.toohome.android.reviewroom.R
 import com.toohome.android.reviewroom.data.SuccessResult
 import com.toohome.android.reviewroom.data.UserMovieRepository
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 
 class LoginViewModel(private val loginRepository: UserMovieRepository) : ViewModel() {
 
@@ -18,14 +19,15 @@ class LoginViewModel(private val loginRepository: UserMovieRepository) : ViewMod
     val loginResult: LiveData<LoginResult> = _loginResult
 
     fun login(username: String, password: String) {
-        // can be launched in a separate asynchronous job
-        val result = runBlocking { loginRepository.login(username, password) }
+        viewModelScope.launch {
+            val result = loginRepository.login(username, password)
 
-        if (result is SuccessResult) {
-            _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.username))
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
+            if (result is SuccessResult) {
+                _loginResult.value =
+                    LoginResult(success = R.string.welcome)
+            } else {
+                _loginResult.value = LoginResult(error = R.string.login_failed)
+            }
         }
     }
 
