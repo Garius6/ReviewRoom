@@ -1,4 +1,4 @@
-package com.toohome.android.reviewroom.model
+package com.toohome.android.reviewroom.data.model
 
 import com.google.gson.annotations.SerializedName
 

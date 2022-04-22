@@ -1,11 +1,11 @@
-package com.toohome.android.reviewroom.model.api
+package com.toohome.android.reviewroom.data
 
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.squareup.picasso.Picasso
 import com.toohome.android.reviewroom.R
-import com.toohome.android.reviewroom.model.Comment
-import com.toohome.android.reviewroom.model.Movie
+import com.toohome.android.reviewroom.data.model.Comment
+import com.toohome.android.reviewroom.data.model.Movie
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import retrofit2.Response

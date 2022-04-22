@@ -1,7 +1,7 @@
-package com.toohome.android.reviewroom.model.api
+package com.toohome.android.reviewroom.data
 
-import com.toohome.android.reviewroom.model.Comment
-import com.toohome.android.reviewroom.model.Movie
+import com.toohome.android.reviewroom.data.model.Comment
+import com.toohome.android.reviewroom.data.model.Movie
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

@@ -3,8 +3,8 @@ package com.toohome.android.reviewroom.ui
 import android.util.Log
 import android.widget.ImageView
 import androidx.lifecycle.ViewModel
-import com.toohome.android.reviewroom.model.Movie
-import com.toohome.android.reviewroom.model.MovieRepository
+import com.toohome.android.reviewroom.data.MovieRepository
+import com.toohome.android.reviewroom.data.model.Movie
 
 private const val TAG = "MovieBasicViewModel"
 

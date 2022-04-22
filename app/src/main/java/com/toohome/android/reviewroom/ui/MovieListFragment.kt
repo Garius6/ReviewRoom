@@ -11,9 +11,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.toohome.android.reviewroom.R
+import com.toohome.android.reviewroom.data.model.Movie
 import com.toohome.android.reviewroom.databinding.ListItemMovieBinding
 import com.toohome.android.reviewroom.databinding.ListMovieBinding
-import com.toohome.android.reviewroom.model.Movie
 import com.toohome.android.reviewroom.utils.ErrorResult
 import com.toohome.android.reviewroom.utils.PendingResult
 import com.toohome.android.reviewroom.utils.SuccessResult

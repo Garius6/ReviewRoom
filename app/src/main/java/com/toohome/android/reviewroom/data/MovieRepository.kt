@@ -1,7 +1,8 @@
-package com.toohome.android.reviewroom.model
+package com.toohome.android.reviewroom.data
 
 import android.widget.ImageView
-import com.toohome.android.reviewroom.model.api.MovieApiFetcher
+import com.toohome.android.reviewroom.data.model.Comment
+import com.toohome.android.reviewroom.data.model.Movie
 import com.toohome.android.reviewroom.utils.ErrorResult
 import com.toohome.android.reviewroom.utils.Result
 import com.toohome.android.reviewroom.utils.SuccessResult
