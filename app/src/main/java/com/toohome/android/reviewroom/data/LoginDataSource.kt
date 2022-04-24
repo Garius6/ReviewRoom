@@ -7,8 +7,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.IOException
 
 private const val TAG = "LoginDataSource"
@@ -17,38 +17,34 @@ private const val TAG = "LoginDataSource"
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 class LoginDataSource(
-    private val baseUrl: HttpUrl,
+    baseUrl: HttpUrl,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
-
+    private val loginService = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(
+        ScalarsConverterFactory.create()
+    ).build().create(LoginService::class.java)
     var token = ""
 
     suspend fun login(username: String, password: String): Result<LoggedUser, Exception> {
         return withContext(dispatcher) {
             try {
-                val url = baseUrl.newBuilder()
-                    .addPathSegment("user/loginOrCreate")
-                    .addQueryParameter("username", username)
-                    .addQueryParameter("password", password).build()
-
-                val client = OkHttpClient()
-                val request = Request.Builder().url(url).get().build()
-                val response = client.newCall(request).execute()
-                val tokenString = response.body()?.string()
+                Log.d(TAG, "Login started")
+                val response = loginService.loginOrCreate(username, password)
+                val tokenString = response.body()
                     ?: throw IllegalStateException("token string cannot be null")
                 token = tokenString
 
-                Log.d(TAG, tokenString)
+                Log.d(TAG, tokenString.length.toString())
                 val jwt =
                     JWT(
                         tokenString
                     )
 
-                val fakeUser = jwt.getClaim("id").asLong()?.let {
+                val user = jwt.getClaim("id").asLong()?.let {
                     jwt.getClaim("username").asString()
                         ?.let { it1 -> LoggedUser(it, it1) }
                 }
-                SuccessResult(fakeUser ?: throw IllegalStateException("Cannot parse token"))
+                SuccessResult(user ?: throw IllegalStateException("Cannot parse token"))
             } catch (e: Throwable) {
                 Log.d(TAG, e.toString())
                 ErrorResult(IOException("Error logging in", e))

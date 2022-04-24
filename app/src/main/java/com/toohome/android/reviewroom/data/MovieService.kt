@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface MovieApi {
+interface MovieService {
     @GET("movie/{id}")
     suspend fun getMovie(@Path("id") movieId: Long): Response<Movie>
 

@@ -14,7 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MovieDataSource(private val baseUrl: HttpUrl) {
-    private lateinit var movieApi: MovieApi
+    private lateinit var movieService: MovieService
 
     fun setToken(token: String) {
         val client = OkHttpClient.Builder().addInterceptor {
@@ -30,22 +30,23 @@ class MovieDataSource(private val baseUrl: HttpUrl) {
             it.proceed(compressedRequest)
         }.build()
 
-        movieApi = Retrofit.Builder()
+        movieService = Retrofit.Builder()
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(baseUrl)
             .build()
-            .create(MovieApi::class.java)
+            .create(MovieService::class.java)
     }
 
-    suspend fun getMovies(): Response<List<Movie>> = movieApi.getMovies()
+    suspend fun getMovies(): Response<List<Movie>> = movieService.getMovies()
 
-    suspend fun getMovie(id: Long): Response<Movie> = movieApi.getMovie(id)
+    suspend fun getMovie(id: Long): Response<Movie> = movieService.getMovie(id)
 
     suspend fun createCommentForMovie(movieId: Long, comment: Comment) =
-        movieApi.createCommentForMovie(movieId, comment)
+        movieService.createCommentForMovie(movieId, comment)
 
-    suspend fun getComments(movieId: Long): Response<List<Comment>> = movieApi.getComments(movieId)
+    suspend fun getComments(movieId: Long): Response<List<Comment>> =
+        movieService.getComments(movieId)
 
     fun loadPosterIntoViewWithPlaceholder(
         moviePosterUrl: String,
