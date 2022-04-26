@@ -5,10 +5,11 @@ import com.auth0.android.jwt.JWT
 import com.toohome.android.reviewroom.data.model.LoggedUser
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import okhttp3.HttpUrl
+import okhttp3.*
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
 private const val TAG = "LoginDataSource"
@@ -21,18 +22,19 @@ class LoginDataSource(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     private val loginService = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(
-        ScalarsConverterFactory.create()
+        GsonConverterFactory.create()
     ).build().create(LoginService::class.java)
-    var token = ""
+
+    var tokenPair = TokenPair("", "")
 
     suspend fun login(username: String, password: String): Result<LoggedUser, Exception> {
         return withContext(dispatcher) {
             try {
                 Log.d(TAG, "Login started")
-                val response = loginService.loginOrCreate(username, password)
-                val tokenString = response.body()
-                    ?: throw IllegalStateException("token string cannot be null")
-                token = tokenString
+                tokenPair = loginService.getTokenPair(username, password).body()
+                    ?: throw IllegalArgumentException("user doesn't exist")
+                Log.d(TAG, tokenPair.toString())
+                val tokenString = tokenPair.accessToken
 
                 Log.d(TAG, tokenString.length.toString())
                 val jwt =
@@ -49,6 +51,23 @@ class LoginDataSource(
                 Log.d(TAG, e.toString())
                 ErrorResult(IOException("Error logging in", e))
             }
+        }
+    }
+
+    fun getTokenAuthenticator(): TokenAuthenticator {
+        return TokenAuthenticator()
+    }
+
+    inner class TokenAuthenticator : Authenticator {
+        override fun authenticate(route: Route?, response: Response): Request? {
+            val newAccessToken = runBlocking { loginService.refreshToken(tokenPair.refreshToken) }
+
+            Log.d(TAG, "generate new token")
+            return response.request().newBuilder().header(
+                "Authorization",
+                newAccessToken.body()?.accessToken
+                    ?: throw IllegalStateException("new access token cannot be null")
+            ).build()
         }
     }
 

@@ -1,5 +1,6 @@
 package com.toohome.android.reviewroom.data
 
+import android.util.Log
 import android.widget.ImageView
 import com.toohome.android.reviewroom.data.model.Comment
 import com.toohome.android.reviewroom.data.model.LoggedUser
@@ -7,7 +8,11 @@ import com.toohome.android.reviewroom.data.model.Movie
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import retrofit2.Response
+
+private const val TAG = "UserMovieRepository"
 
 class UserMovieRepository(
     private val movieDataSource: MovieDataSource,
@@ -31,9 +36,22 @@ class UserMovieRepository(
     suspend fun login(username: String, password: String): Result<LoggedUser, Exception> {
         // handle login
         val result = loginDataSource.login(username, password)
-
+        Log.d(TAG, result.toString())
         if (result is SuccessResult) {
-            movieDataSource.setToken(loginDataSource.token)
+            movieDataSource.setClient(
+                OkHttpClient.Builder().addInterceptor {
+                    val originalRequest: Request = it.request()
+                    if (originalRequest.header("Authorization") != null) {
+                        it.proceed(originalRequest)
+                    }
+
+                    val authorizedRequest: Request = originalRequest.newBuilder()
+                        .header("Authorization", "Bearer ${loginDataSource.tokenPair.accessToken}")
+                        .method(originalRequest.method(), originalRequest.body())
+                        .build()
+                    it.proceed(authorizedRequest)
+                }.authenticator(loginDataSource.getTokenAuthenticator()).build()
+            )
             setLoggedInUser(result.data)
         }
 
@@ -46,6 +64,7 @@ class UserMovieRepository(
                 ?: throw IllegalStateException("Response object cannot be null")
             SuccessResult(res)
         } catch (e: Exception) {
+            Log.d(TAG, e.stackTraceToString())
             ErrorResult(e)
         }
     }

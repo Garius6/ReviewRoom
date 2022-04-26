@@ -8,7 +8,6 @@ import com.toohome.android.reviewroom.data.model.Comment
 import com.toohome.android.reviewroom.data.model.Movie
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,20 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MovieDataSource(private val baseUrl: HttpUrl) {
     private lateinit var movieService: MovieService
 
-    fun setToken(token: String) {
-        val client = OkHttpClient.Builder().addInterceptor {
-            val originalRequest: Request = it.request()
-            if (originalRequest.header("Authorization") != null) {
-                it.proceed(originalRequest)
-            }
-
-            val compressedRequest: Request = originalRequest.newBuilder()
-                .header("Authorization", "Bearer $token")
-                .method(originalRequest.method(), originalRequest.body())
-                .build()
-            it.proceed(compressedRequest)
-        }.build()
-
+    fun setClient(client: OkHttpClient) {
         movieService = Retrofit.Builder()
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
