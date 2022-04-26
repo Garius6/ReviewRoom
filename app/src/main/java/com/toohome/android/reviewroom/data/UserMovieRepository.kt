@@ -8,8 +8,6 @@ import com.toohome.android.reviewroom.data.model.Movie
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import retrofit2.Response
 
 private const val TAG = "UserMovieRepository"
@@ -39,18 +37,7 @@ class UserMovieRepository(
         Log.d(TAG, result.toString())
         if (result is SuccessResult) {
             movieDataSource.setClient(
-                OkHttpClient.Builder().addInterceptor {
-                    val originalRequest: Request = it.request()
-                    if (originalRequest.header("Authorization") != null) {
-                        it.proceed(originalRequest)
-                    }
-
-                    val authorizedRequest: Request = originalRequest.newBuilder()
-                        .header("Authorization", "Bearer ${loginDataSource.tokenPair.accessToken}")
-                        .method(originalRequest.method(), originalRequest.body())
-                        .build()
-                    it.proceed(authorizedRequest)
-                }.authenticator(loginDataSource.getTokenAuthenticator()).build()
+                loginDataSource.getLoginClient()
             )
             setLoggedInUser(result.data)
         }

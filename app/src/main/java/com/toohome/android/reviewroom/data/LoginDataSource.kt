@@ -54,8 +54,19 @@ class LoginDataSource(
         }
     }
 
-    fun getTokenAuthenticator(): TokenAuthenticator {
-        return TokenAuthenticator()
+    fun getLoginClient(): OkHttpClient {
+        return OkHttpClient.Builder().addInterceptor {
+            val originalRequest: Request = it.request()
+            if (originalRequest.header("Authorization") != null) {
+                it.proceed(originalRequest)
+            }
+
+            val authorizedRequest: Request = originalRequest.newBuilder()
+                .header("Authorization", "Bearer ${tokenPair.accessToken}")
+                .method(originalRequest.method(), originalRequest.body())
+                .build()
+            it.proceed(authorizedRequest)
+        }.authenticator(TokenAuthenticator()).build()
     }
 
     inner class TokenAuthenticator : Authenticator {
