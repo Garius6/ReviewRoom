@@ -25,7 +25,7 @@ class LoginDataSource(
         GsonConverterFactory.create()
     ).build().create(LoginService::class.java)
 
-    var tokenPair = TokenPair("", "")
+    private var tokenPair = TokenPair("", "")
 
     suspend fun login(username: String, password: String): Result<LoggedUser, Exception> {
         return withContext(dispatcher) {
