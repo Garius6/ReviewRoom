@@ -3,5 +3,6 @@
     <item
         android:id="@+id/movieListFragment"
         android:enabled="true"
-        android:title="Movies" />
+        android:icon="@drawable/ic_movie_menu"
+        android:title="@string/movie_menu_title" />
 </menu>
