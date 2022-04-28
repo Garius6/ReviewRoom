@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
 
@@ -26,4 +27,9 @@
             android:id="@+id/action_loginFragment_to_list_fragment_nav"
             app:destination="@id/movieListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/collectionFragment"
+        android:name="com.toohome.android.reviewroom.ui.collections.MovieCollectionFragment"
+        android:label="fragment_item_list"
+        tools:layout="@layout/fragment_movie_collection_list" />
 </navigation>

@@ -1,9 +1,9 @@
 package com.toohome.android.reviewroom.ui
 
 import androidx.lifecycle.liveData
-import com.toohome.android.reviewroom.data.UserMovieRepository
+import com.toohome.android.reviewroom.data.Repository
 
-class MovieListViewModel(userMovieRepository: UserMovieRepository) :
-    MovieBasicViewModel(userMovieRepository) {
-    val movies = liveData { emit(userMovieRepository.getMovies()) }
+class MovieListViewModel(repository: Repository) :
+    MovieBasicViewModel(repository) {
+    val movies = liveData { emit(repository.getMovies()) }
 }

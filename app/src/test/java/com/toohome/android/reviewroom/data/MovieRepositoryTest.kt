@@ -28,7 +28,7 @@ class MovieRepositoryTest {
 
         coEvery { movieDataSource.getMovies() } returns Response.success(m)
 
-        val sut = UserMovieRepository(movieDataSource)
+        val sut = Repository(movieDataSource)
         assertEquals(SuccessResult(m), sut.getMovies())
 
         coVerify { movieDataSource.getMovies() }
@@ -40,7 +40,7 @@ class MovieRepositoryTest {
 
         coEvery { movieDataSource.getMovie(1) } returns Response.success(m)
 
-        val sut = UserMovieRepository(movieDataSource)
+        val sut = Repository(movieDataSource)
         assertEquals(SuccessResult(m), sut.getMovie(1))
 
         coVerify { movieDataSource.getMovie(1) }
@@ -52,7 +52,7 @@ class MovieRepositoryTest {
 
         coEvery { movieDataSource.createCommentForMovie(1, c) } just Runs
 
-        val sut = UserMovieRepository(movieDataSource)
+        val sut = Repository(movieDataSource)
         sut.newCommentForMovie(1, c)
 
         coVerify { movieDataSource.createCommentForMovie(1, c) }
@@ -64,7 +64,7 @@ class MovieRepositoryTest {
 
         coEvery { movieDataSource.getComments(1) } returns Response.success(c)
 
-        val sut = UserMovieRepository(movieDataSource)
+        val sut = Repository(movieDataSource)
 
         assertEquals(SuccessResult(c), sut.getComments(1))
 
@@ -82,7 +82,7 @@ class MovieRepositoryTest {
             )
         } just Runs
 
-        val sut = UserMovieRepository(movieDataSource)
+        val sut = Repository(movieDataSource)
         sut.loadPostIntoImageView(m, iv)
 
         coVerify { movieDataSource.loadPosterIntoViewWithPlaceholder(m.posterUrl, into = iv) }

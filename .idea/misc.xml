@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14628623188405798" />
         <entry key="app/src/main/res/layout/bottom_navigation_menu.xml" value="0.1" />
         <entry key="app/src/main/res/layout/error_template.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_collections.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_detail_movie.xml" value="0.39375" />
         <entry key="app/src/main/res/layout/fragment_item.xml" value="0.16757246376811594" />
         <entry key="app/src/main/res/layout/fragment_item_list.xml" value="0.1" />

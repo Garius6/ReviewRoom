@@ -29,16 +29,6 @@ class MovieListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        val baseUrl = HttpUrl.Builder()
-//            .scheme("http")
-//            .host("10.0.2.2").addPathSegments("/user/login")
-//            .port(8000)
-//            .build()
-//        val testLoginRepository: LoginRepository = LoginRepository(LoginDataSource(baseUrl))
-//        runBlocking(Dispatchers.IO) {
-//            Log.d(TAG, testLoginRepository.login("User1", "User1Password").toString())
-//        }
-
         binding = ListMovieBinding.inflate(inflater, container, false)
         binding.rcMovieList.adapter = adapter
         binding.rcMovieList.layoutManager = GridLayoutManager(this.context, 3)

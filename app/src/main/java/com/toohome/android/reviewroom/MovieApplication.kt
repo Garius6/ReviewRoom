@@ -1,9 +1,10 @@
 package com.toohome.android.reviewroom
 
 import android.app.Application
+import com.toohome.android.reviewroom.data.CollectionDataSource
 import com.toohome.android.reviewroom.data.LoginDataSource
 import com.toohome.android.reviewroom.data.MovieDataSource
-import com.toohome.android.reviewroom.data.UserMovieRepository
+import com.toohome.android.reviewroom.data.Repository
 import okhttp3.HttpUrl
 
 class MovieApplication : Application() {
@@ -18,9 +19,11 @@ class MovieApplication : Application() {
 
         val movieApiFetcher = MovieDataSource(baseUrl)
         val loginDataSource = LoginDataSource(baseUrl)
-        UserMovieRepository.initialize(
+        val collectionDataSource = CollectionDataSource(baseUrl)
+        Repository.initialize(
             movieApiFetcher,
-            loginDataSource
+            loginDataSource,
+            collectionDataSource
         )
     }
 }

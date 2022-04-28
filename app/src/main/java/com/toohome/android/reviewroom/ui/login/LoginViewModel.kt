@@ -6,11 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.toohome.android.reviewroom.R
+import com.toohome.android.reviewroom.data.Repository
 import com.toohome.android.reviewroom.data.SuccessResult
-import com.toohome.android.reviewroom.data.UserMovieRepository
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val loginRepository: UserMovieRepository) : ViewModel() {
+class LoginViewModel(private val loginRepository: Repository) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
