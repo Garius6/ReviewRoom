@@ -19,6 +19,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.movieListFragment -> {
                     navController.navigate(R.id.movieListFragment)
                 }
+                R.id.collectionsFragment -> {
+                    navController.navigate(R.id.collectionsFragment)
+                }
             }
         }
     }

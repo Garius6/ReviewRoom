@@ -5,4 +5,10 @@
         android:enabled="true"
         android:icon="@drawable/ic_movie_menu"
         android:title="@string/movie_menu_title" />
+    <item
+        android:id="@+id/collectionsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_collections_menu"
+        android:title="@string/collection_menu_title"
+        />
 </menu>

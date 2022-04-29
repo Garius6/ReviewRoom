@@ -28,7 +28,7 @@
             app:destination="@id/movieListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/collectionFragment"
+        android:id="@+id/collectionsFragment"
         android:name="com.toohome.android.reviewroom.ui.collections.MovieCollectionFragment"
         android:label="fragment_item_list"
         tools:layout="@layout/fragment_movie_collection_list" />

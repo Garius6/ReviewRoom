@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.toohome.android.reviewroom.data.model.MovieCollection
 import com.toohome.android.reviewroom.databinding.FragmentMovieCollectionItemBinding
-import com.toohome.android.reviewroom.placeholder.PlaceholderContent.PlaceholderItem
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].

@@ -1,6 +1,7 @@
 package com.toohome.android.reviewroom.ui.collections
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.toohome.android.reviewroom.ui.MovieViewModelFactory
 /**
  * A fragment representing a list of Items.
  */
+private const val TAG = "MovieCollectionFragment"
 class MovieCollectionFragment : Fragment() {
 
     private val model: MovieCollectionViewModel by viewModels(factoryProducer = { MovieViewModelFactory() })
@@ -32,7 +34,7 @@ class MovieCollectionFragment : Fragment() {
                     binding.list.adapter = MovieCollectionRecyclerViewAdapter(it.data)
                 }
                 is ErrorResult -> {
-                    TODO()
+                    Log.d(TAG, it.error.toString())
                 }
                 is PendingResult -> {
                     TODO()
