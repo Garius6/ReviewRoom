@@ -9,11 +9,15 @@ import com.toohome.android.reviewroom.data.model.MovieCollection
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.HttpUrl
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 private const val TAG = "UserMovieRepository"
 
 class Repository(
+    private val baseUrl: HttpUrl,
     private val movieDataSource: MovieDataSource,
     private val loginDataSource: LoginDataSource,
     private val collectionDataSource: CollectionDataSource,
@@ -38,9 +42,14 @@ class Repository(
         val result = loginDataSource.login(username, password)
         Log.d(TAG, result.toString())
         if (result is SuccessResult) {
-            movieDataSource.setClient(
-                loginDataSource.getLoginClient()
-            )
+            val retrofit =
+                Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .client(loginDataSource.getLoginClient())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+            movieDataSource.setRetrofit(retrofit)
+            collectionDataSource.setRetrofit(retrofit)
             setLoggedInUser(result.data)
         }
 
@@ -59,7 +68,13 @@ class Repository(
     }
 
     suspend fun getCollections(filter: Filter): Result<List<MovieCollection>, Exception> {
-        return withContext(defaultDispatcher) { invokeCall { collectionDataSource.getCollections(filter) } }
+        return withContext(defaultDispatcher) {
+            invokeCall {
+                collectionDataSource.getCollections(
+                    filter
+                )
+            }
+        }
     }
 
     suspend fun getCollection(id: Long): Result<MovieCollection, Exception> {
@@ -114,12 +129,14 @@ class Repository(
         private var INSTANCE: Repository? = null
 
         fun initialize(
+            baseUrl: HttpUrl,
             movieDataSource: MovieDataSource,
             loginDataSource: LoginDataSource,
             collectionDataSource: CollectionDataSource
         ) {
             if (INSTANCE == null) {
                 INSTANCE = Repository(
+                    baseUrl,
                     movieDataSource = movieDataSource,
                     loginDataSource = loginDataSource,
                     collectionDataSource = collectionDataSource

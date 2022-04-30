@@ -14,17 +14,21 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigation.setOnItemReselectedListener { item ->
+        bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.movieListFragment -> {
                     navController.navigate(R.id.movieListFragment)
+                    true
                 }
                 R.id.collectionsFragment -> {
                     navController.navigate(R.id.collectionsFragment)
+                    true
                 }
                 R.id.userDetailFragment -> {
                     navController.navigate(R.id.userDetailFragment)
+                    true
                 }
+                else -> true
             }
         }
     }

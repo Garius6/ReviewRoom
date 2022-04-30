@@ -17,10 +17,11 @@ class MovieApplication : Application() {
             .port(8000)
             .build()
 
-        val movieApiFetcher = MovieDataSource(baseUrl)
         val loginDataSource = LoginDataSource(baseUrl)
-        val collectionDataSource = CollectionDataSource(baseUrl)
+        val movieApiFetcher = MovieDataSource()
+        val collectionDataSource = CollectionDataSource()
         Repository.initialize(
+            baseUrl,
             movieApiFetcher,
             loginDataSource,
             collectionDataSource

@@ -7,21 +7,17 @@ import com.toohome.android.reviewroom.R
 import com.toohome.android.reviewroom.data.model.Comment
 import com.toohome.android.reviewroom.data.model.Movie
 import okhttp3.HttpUrl
-import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class MovieDataSource(private val baseUrl: HttpUrl) {
+class MovieDataSource() {
     private lateinit var movieService: MovieService
+    private lateinit var baseUrl: HttpUrl
 
-    fun setClient(client: OkHttpClient) {
-        movieService = Retrofit.Builder()
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(baseUrl)
-            .build()
-            .create(MovieService::class.java)
+    fun setRetrofit(retrofit: Retrofit) {
+        movieService =
+            retrofit.create(MovieService::class.java)
+        baseUrl = retrofit.baseUrl()
     }
 
     suspend fun getMovies(): Response<List<Movie>> = movieService.getMovies()
