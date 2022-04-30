@@ -11,4 +11,8 @@
         android:icon="@drawable/ic_collections_menu"
         android:title="@string/collection_menu_title"
         />
+    <item
+        android:id="@+id/userDetailFragment"
+        android:enabled="true"
+        android:title="@string/user_menu_title"/>
 </menu>

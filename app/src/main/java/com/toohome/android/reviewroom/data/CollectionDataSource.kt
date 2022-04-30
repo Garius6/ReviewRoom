@@ -15,7 +15,7 @@ class CollectionDataSource(
         GsonConverterFactory.create()
     ).build().create(CollectionService::class.java)
 
-    suspend fun getCollections() = collectionService.getCollections()
+    suspend fun getCollections(filter: Filter) = collectionService.getCollections(filter)
     suspend fun getCollection(id: Long) = collectionService.getCollection(id)
     suspend fun createCollection(collection: MovieCollection) =
         collectionService.createCollection(collection)

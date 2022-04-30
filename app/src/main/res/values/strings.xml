@@ -14,4 +14,6 @@
     <string name="login_failed">"Login failed"</string>
     <string name="movie_menu_title">Movie</string>
     <string name="collection_menu_title">Collections</string>
+    <string name="user_menu_title">Profile</string>
+    <string name="collections">Collections</string>
 </resources>

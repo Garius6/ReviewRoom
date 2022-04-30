@@ -22,6 +22,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.collectionsFragment -> {
                     navController.navigate(R.id.collectionsFragment)
                 }
+                R.id.userDetailFragment -> {
+                    navController.navigate(R.id.userDetailFragment)
+                }
             }
         }
     }

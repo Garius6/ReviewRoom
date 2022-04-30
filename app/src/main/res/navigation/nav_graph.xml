@@ -31,6 +31,10 @@
         <action
             android:id="@+id/action_collectionsFragment_to_movieCollectionDetailFragment"
             app:destination="@id/movieCollectionDetailFragment" />
+        <argument
+            android:name="userId"
+            app:argType="long"
+            android:defaultValue="-1L" />
     </fragment>
     <fragment
         android:id="@+id/movieCollectionDetailFragment"
@@ -40,4 +44,12 @@
             android:name="collectionId"
             app:argType="long" />
     </fragment><action android:id="@+id/action_global_movieDetailFragment" app:destination="@id/movieDetailFragment"/>
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="com.toohome.android.reviewroom.ui.user.UserDetailFragment"
+        android:label="UserDetailFragment" >
+        <action
+            android:id="@+id/action_userDetailFragment_to_collectionsFragment"
+            app:destination="@id/collectionsFragment" />
+    </fragment>
 </navigation>

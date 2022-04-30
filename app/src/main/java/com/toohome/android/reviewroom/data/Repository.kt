@@ -58,8 +58,8 @@ class Repository(
         }
     }
 
-    suspend fun getCollections(): Result<List<MovieCollection>, Exception> {
-        return withContext(defaultDispatcher) { invokeCall { collectionDataSource.getCollections() } }
+    suspend fun getCollections(filter: Filter): Result<List<MovieCollection>, Exception> {
+        return withContext(defaultDispatcher) { invokeCall { collectionDataSource.getCollections(filter) } }
     }
 
     suspend fun getCollection(id: Long): Result<MovieCollection, Exception> {
