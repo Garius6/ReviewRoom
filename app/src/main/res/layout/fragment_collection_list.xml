@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/error_template" android:id="@+id/error_template"/>
+        <include layout="@layout/error_template" android:id="@+id/error_template" android:visibility="gone"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_collection_button"

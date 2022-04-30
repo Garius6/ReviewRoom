@@ -29,14 +29,14 @@ class MovieCollectionRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(private val binding: FragmentCollectionItemBinding) :
+    inner class ViewHolder(binding: FragmentCollectionItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
+        private val idView: TextView = binding.collectionId
+        private val contentView: TextView = binding.collectionName
 
         fun bind(col: MovieCollection) {
-            binding.itemNumber.text = col.id.toString()
-            binding.content.text = col.movies.toString()
+            idView.text = col.id.toString()
+            contentView.text = col.name
             itemView.setOnClickListener {
                 val action =
                     MovieCollectionFragmentDirections.actionCollectionsFragmentToMovieCollectionDetailFragment(col.id)
