@@ -7,11 +7,7 @@
 
     <fragment
         android:id="@+id/movieListFragment"
-        android:name="com.toohome.android.reviewroom.ui.MovieListFragment">
-        <action
-            android:id="@+id/action_list_fragment_nav_to_detail_fragment_nav"
-            app:destination="@id/movieDetailFragment" />
-    </fragment>
+        android:name="com.toohome.android.reviewroom.ui.MovieListFragment"/>
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.toohome.android.reviewroom.ui.MovieDetailFragment">
@@ -31,5 +27,17 @@
         android:id="@+id/collectionsFragment"
         android:name="com.toohome.android.reviewroom.ui.collections.MovieCollectionFragment"
         android:label="fragment_item_list"
-        tools:layout="@layout/fragment_movie_collection_list" />
+        tools:layout="@layout/fragment_collection_list" >
+        <action
+            android:id="@+id/action_collectionsFragment_to_movieCollectionDetailFragment"
+            app:destination="@id/movieCollectionDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieCollectionDetailFragment"
+        android:name="com.toohome.android.reviewroom.ui.collections.MovieCollectionDetailFragment"
+        android:label="MovieCollectionDetailFragment" >
+        <argument
+            android:name="collectionId"
+            app:argType="long" />
+    </fragment><action android:id="@+id/action_global_movieDetailFragment" app:destination="@id/movieDetailFragment"/>
 </navigation>

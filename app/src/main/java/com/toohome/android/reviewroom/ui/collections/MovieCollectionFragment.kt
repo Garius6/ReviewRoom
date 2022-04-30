@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import com.toohome.android.reviewroom.data.ErrorResult
 import com.toohome.android.reviewroom.data.PendingResult
 import com.toohome.android.reviewroom.data.SuccessResult
-import com.toohome.android.reviewroom.databinding.FragmentMovieCollectionListBinding
+import com.toohome.android.reviewroom.databinding.FragmentCollectionListBinding
 import com.toohome.android.reviewroom.ui.MovieViewModelFactory
 
 /**
@@ -26,7 +26,7 @@ class MovieCollectionFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentMovieCollectionListBinding.inflate(inflater, container, false)
+        val binding = FragmentCollectionListBinding.inflate(inflater, container, false)
         binding.list.adapter = MovieCollectionRecyclerViewAdapter(emptyList())
         model.collections.observe(viewLifecycleOwner) {
             when (it) {

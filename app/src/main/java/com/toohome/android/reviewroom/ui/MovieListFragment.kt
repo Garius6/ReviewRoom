@@ -7,23 +7,18 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.toohome.android.reviewroom.R
 import com.toohome.android.reviewroom.data.ErrorResult
 import com.toohome.android.reviewroom.data.PendingResult
 import com.toohome.android.reviewroom.data.SuccessResult
-import com.toohome.android.reviewroom.data.model.Movie
-import com.toohome.android.reviewroom.databinding.ListItemMovieBinding
 import com.toohome.android.reviewroom.databinding.ListMovieBinding
 
 private const val TAG = "MovieListFragment"
 
 class MovieListFragment : Fragment() {
     private lateinit var binding: ListMovieBinding
-    private val adapter = MovieAdapter(emptyList())
     private val model: MovieListViewModel by viewModels(factoryProducer = { MovieViewModelFactory() })
+    private val adapter by lazy { MovieListAdapter(emptyList(), model) }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,7 +34,7 @@ class MovieListFragment : Fragment() {
             when (it) {
                 is SuccessResult -> {
                     binding.rcMovieList.isVisible = true
-                    binding.rcMovieList.adapter = MovieAdapter(it.data)
+                    binding.rcMovieList.adapter = MovieListAdapter(it.data, model)
                 }
                 is ErrorResult -> {
                     binding.errorTemplate.isVisible = true
@@ -55,37 +50,5 @@ class MovieListFragment : Fragment() {
     private fun hideAll() {
         binding.rcMovieList.isVisible = false
         binding.errorTemplate.isVisible = false
-    }
-
-    inner class MovieAdapter(private val movieList: List<Movie>) :
-        RecyclerView.Adapter<MovieAdapter.MovieHolder>() {
-
-        inner class MovieHolder(item: View) : RecyclerView.ViewHolder(item) {
-            private val binding = ListItemMovieBinding.bind(item)
-
-            fun bind(movie: Movie) = with(binding) {
-                model.loadPosterInto(movie, im)
-                tvTitle.text = movie.name
-                itemView.setOnClickListener {
-                    val action =
-                        MovieListFragmentDirections.actionListFragmentNavToDetailFragmentNav(movie.id)
-                    it.findNavController().navigate(action)
-                }
-            }
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.list_item_movie, parent, false)
-            return MovieHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: MovieHolder, position: Int) {
-            holder.bind(movieList[position])
-        }
-
-        override fun getItemCount(): Int {
-            return movieList.size
-        }
     }
 }
