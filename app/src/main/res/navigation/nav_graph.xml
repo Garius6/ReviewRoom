@@ -35,6 +35,9 @@
             android:name="userId"
             app:argType="long"
             android:defaultValue="-1L" />
+        <action
+            android:id="@+id/action_collectionsFragment_to_collectionCreateFragment2"
+            app:destination="@id/collectionCreateFragment2" />
     </fragment>
     <fragment
         android:id="@+id/movieCollectionDetailFragment"
@@ -51,5 +54,21 @@
         <action
             android:id="@+id/action_userDetailFragment_to_collectionsFragment"
             app:destination="@id/collectionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/moviePickerFragment"
+        android:name="com.toohome.android.reviewroom.ui.collections.MoviePickerFragment"
+        android:label="MoviePickerFragment" >
+        <action
+            android:id="@+id/action_moviePickerFragment_to_collectionCreateFragment2"
+            app:destination="@id/collectionCreateFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/collectionCreateFragment2"
+        android:name="com.toohome.android.reviewroom.ui.collections.CollectionCreateFragment"
+        android:label="CollectionCreateFragment" >
+        <action
+            android:id="@+id/action_collectionCreateFragment2_to_moviePickerFragment"
+            app:destination="@id/moviePickerFragment" />
     </fragment>
 </navigation>

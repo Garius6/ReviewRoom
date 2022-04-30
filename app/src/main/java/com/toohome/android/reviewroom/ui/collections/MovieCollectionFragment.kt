@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.toohome.android.reviewroom.databinding.FragmentCollectionListBinding
 import com.toohome.android.reviewroom.ui.MovieViewModelFactory
@@ -28,6 +29,11 @@ class MovieCollectionFragment : Fragment() {
         binding = FragmentCollectionListBinding.inflate(inflater, container, false)
         binding.list.adapter = MovieCollectionRecyclerViewAdapter(emptyList())
         model.getCollections(args.userId)
+        binding.addCollectionButton.setOnClickListener {
+            val action =
+                MovieCollectionFragmentDirections.actionCollectionsFragmentToCollectionCreateFragment2()
+            it.findNavController().navigate(action)
+        }
         model.collectionsUI.observe(viewLifecycleOwner) { uiState ->
             binding.addCollectionButton.isVisible = uiState.isUsersCollections
             uiState.error?.let {
