@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.toohome.android.reviewroom.data.Repository
 import com.toohome.android.reviewroom.data.model.Movie
 
-private const val TAG = "MovieBasicViewModel"
+private const val TAG = "BasicViewModel"
 
 open class MovieBasicViewModel(private val repository: Repository) : ViewModel() {
 

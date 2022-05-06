@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.toohome.android.reviewroom.databinding.FragmentCollectionListBinding
-import com.toohome.android.reviewroom.ui.MovieViewModelFactory
+import com.toohome.android.reviewroom.ui.ViewModelFactory
 
 /**
  * A fragment representing a list of Items.
@@ -19,7 +19,7 @@ private const val TAG = "MovieCollectionFragment"
 
 class MovieCollectionFragment : Fragment() {
     private val args: MovieCollectionFragmentArgs by navArgs()
-    private val model: MovieCollectionViewModel by viewModels(factoryProducer = { MovieViewModelFactory() })
+    private val model: MovieCollectionViewModel by viewModels(factoryProducer = { ViewModelFactory() })
     private lateinit var binding: FragmentCollectionListBinding
     override fun onCreateView(
         inflater: LayoutInflater,

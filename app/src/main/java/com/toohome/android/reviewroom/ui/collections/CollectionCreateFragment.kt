@@ -12,14 +12,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.toohome.android.reviewroom.databinding.FragmentCollectionCreateBinding
-import com.toohome.android.reviewroom.ui.MovieListAdapter
-import com.toohome.android.reviewroom.ui.MovieViewModelFactory
+import com.toohome.android.reviewroom.ui.ViewModelFactory
+import com.toohome.android.reviewroom.ui.movie.MovieListAdapter
 
 class CollectionCreateFragment : Fragment() {
 
     private lateinit var binding: FragmentCollectionCreateBinding
 
-    private val model: MoviePickerViewModel by activityViewModels(factoryProducer = { MovieViewModelFactory() })
+    private val model: MoviePickerViewModel by activityViewModels(factoryProducer = { ViewModelFactory() })
 
     override fun onCreateView(
         inflater: LayoutInflater,

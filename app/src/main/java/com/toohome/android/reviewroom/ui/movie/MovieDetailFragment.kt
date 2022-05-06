@@ -1,4 +1,4 @@
-package com.toohome.android.reviewroom.ui
+package com.toohome.android.reviewroom.ui.movie
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,11 +13,12 @@ import com.toohome.android.reviewroom.data.ErrorResult
 import com.toohome.android.reviewroom.data.PendingResult
 import com.toohome.android.reviewroom.data.SuccessResult
 import com.toohome.android.reviewroom.databinding.FragmentDetailMovieBinding
+import com.toohome.android.reviewroom.ui.ViewModelFactory
 
 private const val TAG = "MovieDetailFragment"
 
 class MovieDetailFragment : Fragment(R.layout.fragment_detail_movie) {
-    private val model: MovieDetailViewModel by viewModels(factoryProducer = { MovieViewModelFactory() })
+    private val model: MovieDetailViewModel by viewModels(factoryProducer = { ViewModelFactory() })
     private lateinit var binding: FragmentDetailMovieBinding
     private val args: MovieDetailFragmentArgs by navArgs()
 

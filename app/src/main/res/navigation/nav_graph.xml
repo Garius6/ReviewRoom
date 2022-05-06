@@ -7,10 +7,10 @@
 
     <fragment
         android:id="@+id/movieListFragment"
-        android:name="com.toohome.android.reviewroom.ui.MovieListFragment"/>
+        android:name="com.toohome.android.reviewroom.ui.movie.MovieListFragment"/>
     <fragment
         android:id="@+id/movieDetailFragment"
-        android:name="com.toohome.android.reviewroom.ui.MovieDetailFragment">
+        android:name="com.toohome.android.reviewroom.ui.movie.MovieDetailFragment">
         <argument
             android:name="movieId"
             app:argType="long" />

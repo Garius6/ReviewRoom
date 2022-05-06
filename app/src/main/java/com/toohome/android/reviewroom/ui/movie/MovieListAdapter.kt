@@ -1,4 +1,4 @@
-package com.toohome.android.reviewroom.ui
+package com.toohome.android.reviewroom.ui.movie
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +9,7 @@ import com.toohome.android.reviewroom.NavGraphDirections
 import com.toohome.android.reviewroom.R
 import com.toohome.android.reviewroom.data.model.Movie
 import com.toohome.android.reviewroom.databinding.ListItemMovieBinding
+import com.toohome.android.reviewroom.ui.MovieBasicViewModel
 
 class MovieListAdapter(private val movieList: List<Movie>, private val model: MovieBasicViewModel) :
     RecyclerView.Adapter<MovieListAdapter.MovieHolder>() {

@@ -14,11 +14,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.toohome.android.reviewroom.databinding.FragmentLoginBinding
-import com.toohome.android.reviewroom.ui.MovieViewModelFactory
+import com.toohome.android.reviewroom.ui.ViewModelFactory
 
 class LoginFragment : Fragment() {
 
-    private val loginViewModel: LoginViewModel by viewModels(factoryProducer = { MovieViewModelFactory() })
+    private val loginViewModel: LoginViewModel by viewModels(factoryProducer = { ViewModelFactory() })
     private var _binding: FragmentLoginBinding? = null
 
     // This property is only valid between onCreateView and

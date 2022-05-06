@@ -9,10 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.toohome.android.reviewroom.data.model.LoggedUser
 import com.toohome.android.reviewroom.databinding.FragmentUserDetailBinding
-import com.toohome.android.reviewroom.ui.MovieViewModelFactory
+import com.toohome.android.reviewroom.ui.ViewModelFactory
 
 class UserDetailFragment : Fragment() {
-    private val model: UserDetailViewModel by viewModels(factoryProducer = { MovieViewModelFactory() })
+    private val model: UserDetailViewModel by viewModels(factoryProducer = { ViewModelFactory() })
     private val user: LoggedUser by lazy { model.getUser() }
 
     override fun onCreateView(

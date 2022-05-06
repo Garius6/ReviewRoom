@@ -1,4 +1,4 @@
-package com.toohome.android.reviewroom.ui
+package com.toohome.android.reviewroom.ui.movie
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,12 +12,13 @@ import com.toohome.android.reviewroom.data.ErrorResult
 import com.toohome.android.reviewroom.data.PendingResult
 import com.toohome.android.reviewroom.data.SuccessResult
 import com.toohome.android.reviewroom.databinding.ListMovieBinding
+import com.toohome.android.reviewroom.ui.ViewModelFactory
 
 private const val TAG = "MovieListFragment"
 
 class MovieListFragment : Fragment() {
     private lateinit var binding: ListMovieBinding
-    private val model: MovieListViewModel by viewModels(factoryProducer = { MovieViewModelFactory() })
+    private val model: MovieListViewModel by viewModels(factoryProducer = { ViewModelFactory() })
     private val adapter by lazy { MovieListAdapter(emptyList(), model) }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +41,7 @@ class MovieListFragment : Fragment() {
                     binding.errorTemplate.isVisible = true
                 }
                 is PendingResult -> {
-                    throw NotImplementedError("Pending result never sending ")
+                    TODO()
                 }
             }
         }

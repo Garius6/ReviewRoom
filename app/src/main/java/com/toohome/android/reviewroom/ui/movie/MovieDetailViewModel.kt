@@ -1,4 +1,4 @@
-package com.toohome.android.reviewroom.ui
+package com.toohome.android.reviewroom.ui.movie
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +7,7 @@ import com.toohome.android.reviewroom.data.PendingResult
 import com.toohome.android.reviewroom.data.Repository
 import com.toohome.android.reviewroom.data.Result
 import com.toohome.android.reviewroom.data.model.Movie
+import com.toohome.android.reviewroom.ui.MovieBasicViewModel
 import kotlinx.coroutines.launch
 
 private const val TAG = "MovieDetailViewModel"

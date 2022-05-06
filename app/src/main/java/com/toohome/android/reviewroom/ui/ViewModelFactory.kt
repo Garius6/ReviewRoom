@@ -7,9 +7,11 @@ import com.toohome.android.reviewroom.ui.collections.MovieCollectionDetailViewMo
 import com.toohome.android.reviewroom.ui.collections.MovieCollectionViewModel
 import com.toohome.android.reviewroom.ui.collections.MoviePickerViewModel
 import com.toohome.android.reviewroom.ui.login.LoginViewModel
+import com.toohome.android.reviewroom.ui.movie.MovieDetailViewModel
+import com.toohome.android.reviewroom.ui.movie.MovieListViewModel
 import com.toohome.android.reviewroom.ui.user.UserDetailViewModel
 
-class MovieViewModelFactory : ViewModelProvider.Factory {
+class ViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
         when (modelClass) {

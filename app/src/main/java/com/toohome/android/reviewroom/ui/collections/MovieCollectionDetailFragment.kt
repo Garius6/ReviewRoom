@@ -12,11 +12,11 @@ import com.toohome.android.reviewroom.data.ErrorResult
 import com.toohome.android.reviewroom.data.PendingResult
 import com.toohome.android.reviewroom.data.SuccessResult
 import com.toohome.android.reviewroom.databinding.FragmentCollectionDetailListBinding
-import com.toohome.android.reviewroom.ui.MovieListAdapter
-import com.toohome.android.reviewroom.ui.MovieViewModelFactory
+import com.toohome.android.reviewroom.ui.ViewModelFactory
+import com.toohome.android.reviewroom.ui.movie.MovieListAdapter
 
 class MovieCollectionDetailFragment : Fragment() {
-    private val model: MovieCollectionDetailViewModel by viewModels(factoryProducer = { MovieViewModelFactory() })
+    private val model: MovieCollectionDetailViewModel by viewModels(factoryProducer = { ViewModelFactory() })
     private val args: MovieCollectionDetailFragmentArgs by navArgs()
 
     override fun onCreateView(

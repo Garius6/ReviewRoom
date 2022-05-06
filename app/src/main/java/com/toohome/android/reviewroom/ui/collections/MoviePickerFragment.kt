@@ -11,11 +11,11 @@ import com.toohome.android.reviewroom.data.ErrorResult
 import com.toohome.android.reviewroom.data.PendingResult
 import com.toohome.android.reviewroom.data.SuccessResult
 import com.toohome.android.reviewroom.databinding.FragmentCollectionMoviePickerBinding
-import com.toohome.android.reviewroom.ui.MovieViewModelFactory
+import com.toohome.android.reviewroom.ui.ViewModelFactory
 
 class MoviePickerFragment : Fragment() {
     private lateinit var binding: FragmentCollectionMoviePickerBinding
-    private val model: MoviePickerViewModel by activityViewModels(factoryProducer = { MovieViewModelFactory() })
+    private val model: MoviePickerViewModel by activityViewModels(factoryProducer = { ViewModelFactory() })
 
     override fun onCreateView(
         inflater: LayoutInflater,
