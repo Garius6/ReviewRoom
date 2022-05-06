@@ -4,8 +4,12 @@ import com.toohome.android.reviewroom.data.model.MovieCollection
 import retrofit2.Response
 import retrofit2.http.*
 
-enum class Filter() {
-    USER, TOP
+enum class Filter {
+    USER, TOP;
+
+    override fun toString(): String {
+        return super.toString().lowercase()
+    }
 }
 
 interface CollectionService {

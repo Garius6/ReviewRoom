@@ -7,7 +7,6 @@ import com.toohome.android.reviewroom.data.*
 import com.toohome.android.reviewroom.data.model.MovieCollection
 import com.toohome.android.reviewroom.ui.MovieBasicViewModel
 import kotlinx.coroutines.launch
-import java.util.*
 
 class MovieCollectionViewModel(private val repository: Repository) :
     MovieBasicViewModel(repository) {
