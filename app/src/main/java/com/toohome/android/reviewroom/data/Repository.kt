@@ -56,7 +56,7 @@ class Repository(
         return result
     }
 
-    private suspend fun <T> invokeCall(call: suspend () -> Response<T>): Result<T, Exception> {
+    private suspend fun <T> invokeCallWithBody(call: suspend () -> Response<T>): Result<T, Exception> {
         return try {
             val res = call.invoke().body()
                 ?: throw IllegalStateException("Response object cannot be null")
@@ -67,9 +67,21 @@ class Repository(
         }
     }
 
+    private suspend fun invokeCall(call: suspend () -> Response<Void>): Result<Boolean, Exception> {
+        return try {
+            if (call.invoke().code() != 200) {
+                return ErrorResult(IllegalArgumentException("Response code is not OK"))
+            }
+            SuccessResult(true)
+        } catch (e: Exception) {
+            Log.d(TAG, e.stackTraceToString())
+            ErrorResult(e)
+        }
+    }
+
     suspend fun getCollections(filter: Filter): Result<List<MovieCollection>, Exception> {
         return withContext(defaultDispatcher) {
-            invokeCall {
+            invokeCallWithBody {
                 collectionDataSource.getCollections(
                     filter
                 )
@@ -78,10 +90,10 @@ class Repository(
     }
 
     suspend fun getCollection(id: Long): Result<MovieCollection, Exception> {
-        return withContext(defaultDispatcher) { invokeCall { collectionDataSource.getCollection(id) } }
+        return withContext(defaultDispatcher) { invokeCallWithBody { collectionDataSource.getCollection(id) } }
     }
 
-    suspend fun createCollection(collection: MovieCollection): Result<Nothing, Exception> {
+    suspend fun createCollection(collection: MovieCollection): Result<Boolean, Exception> {
         return withContext(defaultDispatcher) {
             invokeCall {
                 collectionDataSource.createCollection(
@@ -92,11 +104,11 @@ class Repository(
     }
 
     suspend fun getMovies(): Result<List<Movie>, Exception> {
-        return withContext(defaultDispatcher) { invokeCall { movieDataSource.getMovies() } }
+        return withContext(defaultDispatcher) { invokeCallWithBody { movieDataSource.getMovies() } }
     }
 
     suspend fun getMovie(id: Long): Result<Movie, Exception> {
-        return withContext(defaultDispatcher) { invokeCall { movieDataSource.getMovie(id) } }
+        return withContext(defaultDispatcher) { invokeCallWithBody { movieDataSource.getMovie(id) } }
     }
 
     suspend fun newCommentForMovie(movieId: Long, comment: Comment): Result<Boolean, Exception> {
@@ -112,7 +124,7 @@ class Repository(
 
     suspend fun getComments(movieId: Long): Result<List<Comment>, Exception> {
         return withContext(defaultDispatcher) {
-            invokeCall {
+            invokeCallWithBody {
                 movieDataSource.getComments(
                     movieId
                 )

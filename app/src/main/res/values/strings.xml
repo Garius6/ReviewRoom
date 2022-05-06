@@ -16,4 +16,6 @@
     <string name="collection_menu_title">Collections</string>
     <string name="user_menu_title">Profile</string>
     <string name="collections">Collections</string>
+    <string name="create_collection_button">Create</string>
+    <string name="add_movie_button">Add movie</string>
 </resources>

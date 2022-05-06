@@ -14,4 +14,6 @@ open class MovieBasicViewModel(private val repository: Repository) : ViewModel()
         Log.d(TAG, "Download poster for $movie")
         repository.loadPostIntoImageView(movie, into)
     }
+
+    val userId = if (repository.isLoggedIn) repository.user?.id else (-1)
 }

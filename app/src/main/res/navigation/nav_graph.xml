@@ -70,5 +70,10 @@
         <action
             android:id="@+id/action_collectionCreateFragment2_to_moviePickerFragment"
             app:destination="@id/moviePickerFragment" />
+        <action
+            android:id="@+id/action_collectionCreateFragment2_to_collectionsFragment"
+            app:destination="@id/collectionsFragment"
+            app:popUpTo="@id/collectionsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

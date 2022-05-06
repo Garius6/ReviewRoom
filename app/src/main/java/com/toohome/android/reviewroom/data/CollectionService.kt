@@ -20,5 +20,5 @@ interface CollectionService {
     suspend fun getCollection(@Path("id") id: Long): Response<MovieCollection>
 
     @POST("collection")
-    suspend fun createCollection(@Body collection: MovieCollection): Response<Nothing>
+    suspend fun createCollection(@Body collection: MovieCollection): Response<Void>
 }
