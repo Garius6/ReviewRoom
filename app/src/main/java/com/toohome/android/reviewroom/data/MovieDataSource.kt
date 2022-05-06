@@ -24,7 +24,7 @@ class MovieDataSource() {
 
     suspend fun getMovie(id: Long): Response<Movie> = movieService.getMovie(id)
 
-    suspend fun createCommentForMovie(movieId: Long, comment: Comment) =
+    suspend fun createCommentForMovie(movieId: Long, comment: Comment): Response<Void> =
         movieService.createCommentForMovie(movieId, comment)
 
     suspend fun getComments(movieId: Long): Response<List<Comment>> =

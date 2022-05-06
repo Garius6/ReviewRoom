@@ -8,9 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.toohome.android.reviewroom.data.ErrorResult
-import com.toohome.android.reviewroom.data.PendingResult
-import com.toohome.android.reviewroom.data.SuccessResult
+import com.toohome.android.reviewroom.data.Result
 import com.toohome.android.reviewroom.databinding.ListMovieBinding
 import com.toohome.android.reviewroom.ui.ViewModelFactory
 
@@ -33,14 +31,14 @@ class MovieListFragment : Fragment() {
         model.movies.observe(viewLifecycleOwner) {
             hideAll()
             when (it) {
-                is SuccessResult -> {
+                is Result.Success -> {
                     binding.rcMovieList.isVisible = true
                     binding.rcMovieList.adapter = MovieListAdapter(it.data, model)
                 }
-                is ErrorResult -> {
+                is Result.Failure -> {
                     binding.errorTemplate.isVisible = true
                 }
-                is PendingResult -> {
+                is Result.Pending -> {
                     TODO()
                 }
             }

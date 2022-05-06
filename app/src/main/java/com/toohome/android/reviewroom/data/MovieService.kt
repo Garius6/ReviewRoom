@@ -16,7 +16,7 @@ interface MovieService {
     suspend fun getMovies(): Response<List<Movie>>
 
     @POST("movie/{id}/comment")
-    suspend fun createCommentForMovie(@Path("id") movieId: Long, @Body comment: Comment)
+    suspend fun createCommentForMovie(@Path("id") movieId: Long, @Body comment: Comment): Response<Void>
 
     @GET("movie/{id}/comments")
     suspend fun getComments(@Path("id") movieId: Long): Response<List<Comment>>

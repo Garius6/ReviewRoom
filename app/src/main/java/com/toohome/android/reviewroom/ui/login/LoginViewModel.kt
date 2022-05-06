@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.toohome.android.reviewroom.R
 import com.toohome.android.reviewroom.data.Repository
-import com.toohome.android.reviewroom.data.SuccessResult
+import com.toohome.android.reviewroom.data.Result
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val loginRepository: Repository) : ViewModel() {
@@ -22,7 +22,7 @@ class LoginViewModel(private val loginRepository: Repository) : ViewModel() {
         viewModelScope.launch {
             val result = loginRepository.login(username, password)
 
-            if (result is SuccessResult) {
+            if (result is Result.Success) {
                 _loginResult.value =
                     LoginResult(success = R.string.welcome)
             } else {

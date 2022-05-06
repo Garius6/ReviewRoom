@@ -21,13 +21,13 @@ class MovieCollectionViewModel(private val repository: Repository) :
                 val res =
                     repository.getCollections(if (isUsersCollection) Filter.USER else Filter.TOP)
             ) {
-                is SuccessResult -> {
+                is Result.Success -> {
                     _collectionsUI.value = MovieCollectionUI(isUsersCollection, null, res.data)
                 }
-                is ErrorResult -> {
+                is Result.Failure -> {
                     _collectionsUI.value = MovieCollectionUI(isUsersCollection, res.error, null)
                 }
-                is PendingResult -> {
+                is Result.Pending -> {
                     TODO()
                 }
             }

@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.toohome.android.reviewroom.R
-import com.toohome.android.reviewroom.data.ErrorResult
-import com.toohome.android.reviewroom.data.PendingResult
-import com.toohome.android.reviewroom.data.SuccessResult
+import com.toohome.android.reviewroom.data.Result
 import com.toohome.android.reviewroom.databinding.FragmentDetailMovieBinding
 import com.toohome.android.reviewroom.ui.ViewModelFactory
 
@@ -33,16 +31,16 @@ class MovieDetailFragment : Fragment(R.layout.fragment_detail_movie) {
         model.movie.observe(this.viewLifecycleOwner) {
             hideAll()
             when (it) {
-                is SuccessResult -> {
+                is Result.Success -> {
                     binding.movieName.isGone = false
                     binding.posterView.isGone = false
                     binding.movie = it.data
                     model.loadPosterInto(it.data, binding.posterView)
                 }
-                is ErrorResult -> {
+                is Result.Failure -> {
                     binding.errorTemplate.isGone = false
                 }
-                is PendingResult -> {
+                is Result.Pending -> {
                     binding.pendingSpinner.isGone = false
                 }
             }

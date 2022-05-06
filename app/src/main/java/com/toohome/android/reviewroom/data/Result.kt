@@ -1,13 +1,14 @@
 package com.toohome.android.reviewroom.data
 
-sealed class Result<out Success, out Failure>
+sealed class Result<out Success, out Failure> {
 
-object PendingResult : Result<Nothing, Nothing>()
+    object Pending : Result<Nothing, Nothing>()
 
-data class SuccessResult<out Success>(
-    val data: Success
-) : Result<Success, Nothing>()
+    data class Success<out Success>(
+        val data: Success
+    ) : Result<Success, Nothing>()
 
-data class ErrorResult<Failure>(
-    val error: Exception
-) : Result<Nothing, Failure>()
+    data class Failure<Failure>(
+        val error: Exception
+    ) : Result<Nothing, Failure>()
+}

@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.toohome.android.reviewroom.data.ErrorResult
-import com.toohome.android.reviewroom.data.PendingResult
-import com.toohome.android.reviewroom.data.SuccessResult
+import com.toohome.android.reviewroom.data.Result
 import com.toohome.android.reviewroom.databinding.FragmentCollectionMoviePickerBinding
 import com.toohome.android.reviewroom.ui.ViewModelFactory
 
@@ -27,13 +25,13 @@ class MoviePickerFragment : Fragment() {
         binding.list.layoutManager = GridLayoutManager(context, 3)
         model.movies.observe(viewLifecycleOwner) {
             when (it) {
-                is SuccessResult -> {
+                is Result.Success -> {
                     binding.list.adapter = MoviePickerAdapter(it.data, model)
                 }
-                is ErrorResult -> {
+                is Result.Failure -> {
                     TODO()
                 }
-                is PendingResult -> {
+                is Result.Pending -> {
                     TODO()
                 }
             }

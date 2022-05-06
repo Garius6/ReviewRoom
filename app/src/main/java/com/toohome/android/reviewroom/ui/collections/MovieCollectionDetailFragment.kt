@@ -8,9 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.toohome.android.reviewroom.data.ErrorResult
-import com.toohome.android.reviewroom.data.PendingResult
-import com.toohome.android.reviewroom.data.SuccessResult
+import com.toohome.android.reviewroom.data.Result
 import com.toohome.android.reviewroom.databinding.FragmentCollectionDetailListBinding
 import com.toohome.android.reviewroom.ui.ViewModelFactory
 import com.toohome.android.reviewroom.ui.movie.MovieListAdapter
@@ -31,14 +29,14 @@ class MovieCollectionDetailFragment : Fragment() {
         model.getCollection(args.collectionId)
         model.collection.observe(this.viewLifecycleOwner) {
             when (it) {
-                is SuccessResult -> {
+                is Result.Success -> {
                     binding.collectionDetailMovieList.adapter =
                         MovieListAdapter(it.data.movies, model)
                 }
-                is ErrorResult -> {
+                is Result.Failure -> {
                     TODO()
                 }
-                is PendingResult -> {
+                is Result.Pending -> {
                     TODO()
                 }
             }

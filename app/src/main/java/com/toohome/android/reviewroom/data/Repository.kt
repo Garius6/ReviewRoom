@@ -41,7 +41,7 @@ class Repository(
         // handle login
         val result = loginDataSource.login(username, password)
         Log.d(TAG, result.toString())
-        if (result is SuccessResult) {
+        if (result is Result.Success) {
             val retrofit =
                 Retrofit.Builder()
                     .baseUrl(baseUrl)
@@ -60,22 +60,22 @@ class Repository(
         return try {
             val res = call.invoke().body()
                 ?: throw IllegalStateException("Response object cannot be null")
-            SuccessResult(res)
+            Result.Success(res)
         } catch (e: Exception) {
             Log.d(TAG, e.stackTraceToString())
-            ErrorResult(e)
+            Result.Failure(e)
         }
     }
 
     private suspend fun invokeCall(call: suspend () -> Response<Void>): Result<Boolean, Exception> {
         return try {
             if (call.invoke().code() != 200) {
-                return ErrorResult(IllegalArgumentException("Response code is not OK"))
+                return Result.Failure(IllegalArgumentException("Response code is not OK"))
             }
-            SuccessResult(true)
+            Result.Success(true)
         } catch (e: Exception) {
             Log.d(TAG, e.stackTraceToString())
-            ErrorResult(e)
+            Result.Failure(e)
         }
     }
 
@@ -90,7 +90,13 @@ class Repository(
     }
 
     suspend fun getCollection(id: Long): Result<MovieCollection, Exception> {
-        return withContext(defaultDispatcher) { invokeCallWithBody { collectionDataSource.getCollection(id) } }
+        return withContext(defaultDispatcher) {
+            invokeCallWithBody {
+                collectionDataSource.getCollection(
+                    id
+                )
+            }
+        }
     }
 
     suspend fun createCollection(collection: MovieCollection): Result<Boolean, Exception> {
@@ -113,12 +119,7 @@ class Repository(
 
     suspend fun newCommentForMovie(movieId: Long, comment: Comment): Result<Boolean, Exception> {
         return withContext(defaultDispatcher) {
-            try {
-                movieDataSource.createCommentForMovie(movieId, comment)
-                SuccessResult(true)
-            } catch (e: Exception) {
-                ErrorResult(e)
-            }
+            invokeCall { movieDataSource.createCommentForMovie(movieId, comment) }
         }
     }
 

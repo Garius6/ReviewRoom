@@ -46,10 +46,10 @@ class LoginDataSource(
                     jwt.getClaim("username").asString()
                         ?.let { it1 -> LoggedUser(it, it1) }
                 }
-                SuccessResult(user ?: throw IllegalStateException("Cannot parse token"))
+                Result.Success(user ?: throw IllegalStateException("Cannot parse token"))
             } catch (e: Throwable) {
                 Log.d(TAG, e.toString())
-                ErrorResult(IOException("Error logging in", e))
+                Result.Failure(IOException("Error logging in", e))
             }
         }
     }
